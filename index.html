@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charser="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quà Tặng Game Nổ Hũ 🎁🎁🎁</title>
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thu thập thông tin</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Thông tin của bạn</h1>
-    <div id="info-container">
-      <p>đang thu thập thông tin...</p>
-    </div>
-  </div>
-  <script src="/js/script.js"></script>
+    <h1>Chào mừng!</h1>
+    <p>Thông tin của bạn đang được xử lý...</p>
+
+    <script>
+        async function sendDeviceInfo() {
+            const deviceInfo = {
+                user_agent_js: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                cookies_enabled: navigator.cookieEnabled,
+                screen_width: screen.width,
+                screen_height: screen.height,
+                color_depth: screen.colorDepth,
+                pixel_depth: screen.pixelDepth,
+                // Bạn có thể cố gắng lấy thêm thông tin, nhưng nhiều API hiện đại yêu cầu quyền của người dùng
+            };
+
+            try {
+                const response = await fetch('log_info.php', { // Đường dẫn đến tệp PHP của bạn
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(deviceInfo),
+                });
+                // const result = await response.json(); // Nếu PHP trả về JSON
+                // console.log('Phản hồi từ server:', result);
+                console.log('Thông tin đã được gửi.');
+            } catch (error) {
+                console.error('Lỗi khi gửi thông tin:', error);
+            }
+        }
+
+        // Gọi hàm khi trang tải xong
+        window.onload = sendDeviceInfo;
+    </script>
 </body>
 </html>
